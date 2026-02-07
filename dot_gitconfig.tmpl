@@ -62,3 +62,8 @@
 [credential]
   helper = osxkeychain
 {{ end -}}
+
+{{- if eq .chezmoi.hostname "kamino" }}
+[safe]
+  directory = /home/cspan/nfs
+{{ end -}}
