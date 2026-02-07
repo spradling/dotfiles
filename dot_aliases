@@ -1,0 +1,152 @@
+# ~/.aliases - Clean, portable aliases
+# Managed by chezmoi
+
+# ─── Navigation ───────────────────────────────────────────────────────────────
+
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
+alias -- -='cd -'
+
+# ─── Listing ──────────────────────────────────────────────────────────────────
+
+# Detect ls flavor (GNU vs BSD/macOS)
+if ls --group-directories-first &>/dev/null 2>&1; then
+  # GNU ls
+  alias ls='ls --color=auto --group-directories-first'
+  alias ll='ls -alh --color=auto --group-directories-first'
+  alias la='ls -A --color=auto --group-directories-first'
+else
+  # BSD/macOS ls
+  alias ls='ls -G'
+  alias ll='ls -alhG'
+  alias la='ls -AG'
+fi
+
+alias lt='ls -lhtr'    # sort by time, recent last
+alias lz='ls -lhSr'    # sort by size, largest last
+
+# ─── Safety ───────────────────────────────────────────────────────────────────
+
+alias rm='rm -i'
+alias mv='mv -i'
+alias cp='cp -i'
+alias mkdir='mkdir -pv'
+
+# ─── Git ──────────────────────────────────────────────────────────────────────
+
+alias g='git'
+alias gs='git status'
+alias ga='git add'
+alias gaa='git add --all'
+alias gc='git commit'
+alias gcm='git commit -m'
+alias gca='git commit --amend'
+alias gco='git checkout'
+alias gcb='git checkout -b'
+alias gd='git diff'
+alias gds='git diff --staged'
+alias gl='git log --oneline -20'
+alias glg='git log --graph --oneline --all'
+alias gp='git push'
+alias gpf='git push --force-with-lease'
+alias gpl='git pull'
+alias gst='git stash'
+alias gstp='git stash pop'
+alias gb='git branch'
+alias gbd='git branch -d'
+alias grb='git rebase'
+alias grbi='git rebase -i'
+alias grs='git restore'
+alias grss='git restore --staged'
+
+# ─── Docker ───────────────────────────────────────────────────────────────────
+
+alias d='docker'
+alias dc='docker compose'
+alias dps='docker ps'
+alias dpsa='docker ps -a'
+alias dimg='docker images'
+alias dlog='docker logs -f'
+alias dex='docker exec -it'
+alias dprune='docker system prune -f'
+
+# Quick container management
+alias dcup='docker compose up -d'
+alias dcdown='docker compose down'
+alias dcrestart='docker compose restart'
+alias dcpull='docker compose pull'
+alias dclogs='docker compose logs -f --tail=50'
+
+# ─── Utilities ────────────────────────────────────────────────────────────────
+
+# Clipboard (cross-platform)
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  alias pbp='pbpaste'
+  alias pbc='pbcopy'
+else
+  alias pbp='xclip -selection clipboard -o'
+  alias pbc='xclip -selection clipboard'
+fi
+
+# Quick edit/reload
+alias zshrc='${EDITOR:-vim} ~/.zshrc'
+alias aliases='${EDITOR:-vim} ~/.aliases'
+alias reload='exec zsh'
+
+# Networking
+alias myip='curl -s ifconfig.me'
+alias localip="ipconfig getifaddr en0 2>/dev/null || hostname -I | awk '{print \$1}'"
+alias ports='netstat -tulanp 2>/dev/null || lsof -i -P -n | grep LISTEN'
+
+# Disk usage
+alias df='df -h'
+alias du='du -h'
+alias dud='du -d 1 -h'
+alias duf='du -sh *'
+
+# Better defaults
+alias grep='grep --color=auto'
+alias less='less -R'
+alias tree='tree -C'
+
+# ─── macOS Specific ───────────────────────────────────────────────────────────
+
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  # Flush DNS
+  alias flushdns='sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder'
+  
+  # Show/hide hidden files in Finder
+  alias showfiles='defaults write com.apple.finder AppleShowAllFiles YES; killall Finder'
+  alias hidefiles='defaults write com.apple.finder AppleShowAllFiles NO; killall Finder'
+  
+  # Lock screen
+  alias afk='pmset displaysleepnow'
+  
+  # Homebrew
+  alias brewup='brew update && brew upgrade && brew cleanup'
+fi
+
+# ─── Chezmoi ──────────────────────────────────────────────────────────────────
+
+alias cm='chezmoi'
+alias cma='chezmoi apply'
+alias cme='chezmoi edit'
+alias cmd='chezmoi diff'
+alias cmcd='chezmoi cd'
+alias cmra='chezmoi re-add'
+
+# ─── Quick Directories ────────────────────────────────────────────────────────
+
+alias repos='cd ~/repos'
+alias dl='cd ~/Downloads'
+alias dt='cd ~/Desktop'
+alias ob='cd ~/Obsidian'
+
+# ─── Fun ──────────────────────────────────────────────────────────────────────
+
+alias please='sudo'
+alias fucking='sudo'
+alias whereami='pwd'
+alias week='date +%V'

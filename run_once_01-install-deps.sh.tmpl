@@ -1,0 +1,147 @@
+#!/bin/bash
+# Chezmoi run_once script - executes once per machine
+# Installs dependencies for the dotfiles to work properly
+
+set -e
+
+echo "🚀 Setting up machine..."
+
+# ─── Detect OS ────────────────────────────────────────────────────────────────
+
+{{ if eq .chezmoi.os "darwin" -}}
+# ═══════════════════════════════════════════════════════════════════════════════
+# macOS Setup
+# ═══════════════════════════════════════════════════════════════════════════════
+
+echo "🍎 Detected macOS"
+
+# Install Homebrew if missing
+if ! command -v brew &> /dev/null; then
+  echo "📦 Installing Homebrew..."
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
+# Core tools
+BREW_PACKAGES=(
+  starship      # Prompt
+  fzf           # Fuzzy finder
+  bat           # Better cat
+  eza           # Better ls (optional, aliases use ls)
+  ripgrep       # Better grep
+  fd            # Better find
+  tree          # Directory tree
+  jq            # JSON processor
+  direnv        # Per-directory env
+  gh            # GitHub CLI
+)
+
+echo "📦 Installing Homebrew packages..."
+for pkg in "${BREW_PACKAGES[@]}"; do
+  if ! brew list "$pkg" &>/dev/null; then
+    echo "  Installing $pkg..."
+    brew install "$pkg"
+  else
+    echo "  ✓ $pkg already installed"
+  fi
+done
+
+# Ghostty (if not already installed)
+if ! brew list --cask ghostty &>/dev/null 2>&1; then
+  echo "👻 Installing Ghostty..."
+  brew install --cask ghostty
+else
+  echo "  ✓ Ghostty already installed"
+fi
+
+# Install JetBrains Mono font
+if ! brew list --cask font-jetbrains-mono &>/dev/null 2>&1; then
+  echo "🔤 Installing JetBrains Mono font..."
+  brew tap homebrew/cask-fonts 2>/dev/null || true
+  brew install --cask font-jetbrains-mono
+else
+  echo "  ✓ JetBrains Mono already installed"
+fi
+
+{{ else if eq .chezmoi.os "linux" -}}
+# ═══════════════════════════════════════════════════════════════════════════════
+# Linux Setup
+# ═══════════════════════════════════════════════════════════════════════════════
+
+echo "🐧 Detected Linux"
+
+# Detect package manager
+if command -v apt &> /dev/null; then
+  PKG_MGR="apt"
+  INSTALL_CMD="sudo apt install -y"
+  UPDATE_CMD="sudo apt update"
+elif command -v dnf &> /dev/null; then
+  PKG_MGR="dnf"
+  INSTALL_CMD="sudo dnf install -y"
+  UPDATE_CMD="sudo dnf check-update || true"
+elif command -v pacman &> /dev/null; then
+  PKG_MGR="pacman"
+  INSTALL_CMD="sudo pacman -S --noconfirm"
+  UPDATE_CMD="sudo pacman -Sy"
+else
+  echo "⚠️  Unknown package manager, skipping system packages"
+  PKG_MGR=""
+fi
+
+if [[ -n "$PKG_MGR" ]]; then
+  echo "📦 Using $PKG_MGR..."
+  $UPDATE_CMD
+
+  # Core tools (package names vary by distro)
+  PACKAGES=(fzf bat ripgrep fd-find tree jq direnv)
+  
+  for pkg in "${PACKAGES[@]}"; do
+    echo "  Installing $pkg..."
+    $INSTALL_CMD "$pkg" 2>/dev/null || echo "  ⚠️  $pkg not found in repos"
+  done
+fi
+
+# Install Starship
+if ! command -v starship &> /dev/null; then
+  echo "⭐ Installing Starship..."
+  curl -sS https://starship.rs/install.sh | sh -s -- -y
+else
+  echo "  ✓ Starship already installed"
+fi
+
+{{ end -}}
+
+# ─── ZSH Plugins (cross-platform) ─────────────────────────────────────────────
+
+echo "🔌 Setting up ZSH plugins..."
+
+ZSH_PLUGIN_DIR="$HOME/.zsh"
+mkdir -p "$ZSH_PLUGIN_DIR"
+
+# zsh-syntax-highlighting
+if [[ ! -d "$ZSH_PLUGIN_DIR/zsh-syntax-highlighting" ]]; then
+  echo "  Installing zsh-syntax-highlighting..."
+  git clone --depth 1 https://github.com/zsh-users/zsh-syntax-highlighting.git \
+    "$ZSH_PLUGIN_DIR/zsh-syntax-highlighting"
+else
+  echo "  ✓ zsh-syntax-highlighting already installed"
+fi
+
+# zsh-autosuggestions
+if [[ ! -d "$ZSH_PLUGIN_DIR/zsh-autosuggestions" ]]; then
+  echo "  Installing zsh-autosuggestions..."
+  git clone --depth 1 https://github.com/zsh-users/zsh-autosuggestions.git \
+    "$ZSH_PLUGIN_DIR/zsh-autosuggestions"
+else
+  echo "  ✓ zsh-autosuggestions already installed"
+fi
+
+# ─── Done ─────────────────────────────────────────────────────────────────────
+
+echo ""
+echo "✅ Machine setup complete!"
+echo ""
+echo "Next steps:"
+echo "  1. Restart your terminal (or run: exec zsh)"
+echo "  2. If fonts look wrong in Ghostty, check font-family in ~/.config/ghostty/config"
+echo ""

@@ -1,0 +1,107 @@
+# Starship prompt config
+# https://starship.rs/config/
+
+# Insanely fast prompt (timeout in ms)
+command_timeout = 500
+
+# Don't print a new line at the start of the prompt
+add_newline = true
+
+# Replace the default prompt symbol
+[character]
+success_symbol = "[❯](bold green)"
+error_symbol = "[❯](bold red)"
+vimcmd_symbol = "[❮](bold green)"
+
+# Directory - show 3 levels, truncate to repo root
+[directory]
+truncation_length = 3
+truncate_to_repo = true
+style = "bold cyan"
+
+# Git branch
+[git_branch]
+symbol = " "
+style = "bold purple"
+
+# Git status - minimal, fast
+[git_status]
+style = "bold yellow"
+format = '([$all_status$ahead_behind]($style) )'
+conflicted = "="
+ahead = "⇡${count}"
+behind = "⇣${count}"
+diverged = "⇕⇡${ahead_count}⇣${behind_count}"
+untracked = "?${count}"
+stashed = "*"
+modified = "!${count}"
+staged = "+${count}"
+deleted = "✘${count}"
+
+# Only show username if SSH or root
+[username]
+show_always = false
+style_user = "bold blue"
+style_root = "bold red"
+format = "[$user]($style)@"
+
+# Only show hostname if SSH
+[hostname]
+ssh_only = true
+style = "bold green"
+format = "[$hostname]($style):"
+
+# Command duration - only if > 2 seconds
+[cmd_duration]
+min_time = 2_000
+style = "bold yellow"
+format = "[$duration]($style) "
+
+# Package version - disabled (slow)
+[package]
+disabled = true
+
+# Language versions - only show when relevant files exist
+[nodejs]
+format = "[$symbol($version )]($style)"
+symbol = " "
+
+[python]
+format = "[$symbol($version )]($style)"
+symbol = " "
+
+[rust]
+format = "[$symbol($version )]($style)"
+symbol = " "
+
+[golang]
+format = "[$symbol($version )]($style)"
+symbol = " "
+
+[swift]
+format = "[$symbol($version )]($style)"
+symbol = " "
+
+# Docker context - only show if not default
+[docker_context]
+format = "[$symbol$context]($style) "
+symbol = " "
+only_with_files = true
+
+# Time - disabled by default (uncomment if you want it)
+[time]
+disabled = true
+format = "[$time]($style) "
+style = "dimmed white"
+
+# Kubernetes - disabled (slow, uncomment if you use k8s)
+[kubernetes]
+disabled = true
+
+# AWS - disabled (uncomment if you use AWS)
+[aws]
+disabled = true
+
+# Right-side prompt (disabled - can be slow)
+[status]
+disabled = true

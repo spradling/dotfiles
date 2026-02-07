@@ -1,0 +1,64 @@
+[user]
+  name = {{ .name }}
+  email = {{ .email }}
+
+[init]
+  defaultBranch = main
+
+[core]
+  editor = vim
+  pager = less -R
+  excludesFile = ~/.config/git/ignore
+  autocrlf = input
+
+[pull]
+  rebase = true
+
+[push]
+  default = current
+  autoSetupRemote = true
+
+[fetch]
+  prune = true
+
+[merge]
+  conflictstyle = diff3
+
+[diff]
+  colorMoved = default
+
+[rebase]
+  autoStash = true
+
+[rerere]
+  enabled = true
+
+[alias]
+  # Shortcuts
+  co = checkout
+  br = branch
+  ci = commit
+  st = status
+  
+  # Prettier logs
+  lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+  
+  # Undo last commit (keep changes)
+  undo = reset --soft HEAD~1
+  
+  # Amend without editing message
+  amend = commit --amend --no-edit
+  
+  # Show what I did today
+  today = log --since=midnight --author='{{ .name }}' --oneline
+  
+  # Clean up merged branches
+  cleanup = "!git branch --merged | grep -v '\\*\\|main\\|master' | xargs -n 1 git branch -d"
+
+[color]
+  ui = auto
+
+{{ if eq .chezmoi.os "darwin" -}}
+[credential]
+  helper = osxkeychain
+{{ end -}}

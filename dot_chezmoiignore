@@ -1,0 +1,14 @@
+# Chezmoi ignore file
+# These patterns are ignored in the target (home) directory
+
+# README is for the repo, not home
+README.md
+LICENSE
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Local overrides (intentionally not tracked)
+.zshrc.local
+.aliases.local

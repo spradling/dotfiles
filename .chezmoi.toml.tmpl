@@ -1,0 +1,19 @@
+{{- /* Chezmoi config template - prompts for machine-specific values */ -}}
+{{- $email := promptStringOnce . "email" "Git email address" -}}
+{{- $name := promptStringOnce . "name" "Git name" -}}
+{{- $personal := promptBoolOnce . "personal" "Is this a personal machine (not work)" -}}
+
+[data]
+  email = {{ $email | quote }}
+  name = {{ $name | quote }}
+  personal = {{ $personal }}
+
+[edit]
+  command = "vim"
+
+[diff]
+  pager = "less -R"
+
+[git]
+  autoCommit = false
+  autoPush = false

@@ -1,0 +1,107 @@
+# ~/.zshrc - Minimal, fast, portable
+# Managed by chezmoi - edit source with `chezmoi edit ~/.zshrc`
+
+# ============================================================================
+# Environment
+# ============================================================================
+
+{{- if eq .chezmoi.os "darwin" }}
+# Homebrew (macOS)
+eval "$(/opt/homebrew/bin/brew shellenv)"
+{{- end }}
+
+# XDG Base Directory (be a good citizen)
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_CACHE_HOME="$HOME/.cache"
+
+# Editor
+export EDITOR="vim"
+export VISUAL="$EDITOR"
+
+# History
+HISTFILE="$HOME/.zsh_history"
+HISTSIZE=50000
+SAVEHIST=50000
+setopt SHARE_HISTORY          # Share history between sessions
+setopt HIST_IGNORE_DUPS       # Don't record duplicates
+setopt HIST_IGNORE_SPACE      # Don't record commands starting with space
+setopt HIST_REDUCE_BLANKS     # Remove extra blanks
+setopt HIST_VERIFY            # Show command before executing from history
+
+# ============================================================================
+# Completions
+# ============================================================================
+
+autoload -Uz compinit
+# Only regenerate completion dump once a day
+if [[ -n ${ZDOTDIR}/.zcompdump(#qN.mh+24) ]]; then
+  compinit
+else
+  compinit -C
+fi
+
+# Case-insensitive completion
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+
+# ============================================================================
+# Plugins (no framework, just git clone)
+# ============================================================================
+
+# Fast syntax highlighting
+if [[ -d "$HOME/.zsh/zsh-syntax-highlighting" ]]; then
+  source "$HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+fi
+
+# Autosuggestions (fish-style)
+if [[ -d "$HOME/.zsh/zsh-autosuggestions" ]]; then
+  source "$HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh"
+  ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+fi
+
+# Shift+arrow selection (like an IDE)
+if [[ -d "$HOME/.zsh/zsh-shift-select" ]]; then
+  source "$HOME/.zsh/zsh-shift-select/zsh-shift-select.plugin.zsh"
+fi
+
+# ============================================================================
+# Prompt
+# ============================================================================
+
+eval "$(starship init zsh)"
+
+# ============================================================================
+# Aliases
+# ============================================================================
+
+[[ -f "$HOME/.aliases" ]] && source "$HOME/.aliases"
+
+{{- if eq .chezmoi.hostname "kino" }}
+# Homelab-specific aliases
+[[ -f "$HOME/repos/homelab/.aliases" ]] && source "$HOME/repos/homelab/.aliases"
+{{- end }}
+
+# ============================================================================
+# Tools
+# ============================================================================
+
+# direnv (per-directory environment)
+if command -v direnv &> /dev/null; then
+  eval "$(direnv hook zsh)"
+fi
+
+# fzf (fuzzy finder)
+if command -v fzf &> /dev/null; then
+  source <(fzf --zsh)
+fi
+
+{{- if eq .chezmoi.os "darwin" }}
+# Haskell (ghcup) - only if installed
+[[ -f "$HOME/.ghcup/env" ]] && source "$HOME/.ghcup/env"
+{{- end }}
+
+# ============================================================================
+# Local overrides (not tracked by chezmoi)
+# ============================================================================
+
+[[ -f "$HOME/.zshrc.local" ]] && source "$HOME/.zshrc.local"

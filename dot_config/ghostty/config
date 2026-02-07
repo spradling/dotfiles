@@ -1,0 +1,83 @@
+# Ghostty terminal configuration
+# https://ghostty.org/docs/config
+
+# ─── Font ─────────────────────────────────────────────────────────────────────
+
+# Use a good programming font (adjust to what you have installed)
+# Popular options: JetBrains Mono, Fira Code, SF Mono, Berkeley Mono
+font-family = "JetBrains Mono"
+font-size = 14
+
+# Disable ligatures if you don't like them
+# font-feature = -calt
+# font-feature = -liga
+
+# ─── Theme ────────────────────────────────────────────────────────────────────
+
+# Built-in themes: https://ghostty.org/docs/config/reference#theme
+# Some good ones: Catppuccin Mocha, Tokyo Night, Dracula, One Dark, Nord
+# theme = auto
+theme = "catppuccin-mocha"
+
+# Or set colors manually:
+# background = 1e1e2e
+# foreground = cdd6f4
+# cursor-color = f5e0dc
+
+# Slight transparency (1.0 = opaque)
+background-opacity = 0.95
+
+# ─── Window ───────────────────────────────────────────────────────────────────
+
+# Window padding (pixels)
+window-padding-x = 8
+window-padding-y = 8
+
+# No title bar (uses native macOS title bar by default)
+# window-decoration = false
+
+# Window size (columns x rows)
+window-width = 120
+window-height = 35
+
+# ─── Behavior ─────────────────────────────────────────────────────────────────
+
+# Scrollback lines
+scrollback-limit = 10000
+
+# Copy on select (like Linux terminals)
+copy-on-select = clipboard
+
+# Confirm before closing with running processes
+confirm-close-surface = true
+
+# Shell integration
+shell-integration = zsh
+
+# ─── Keybindings ──────────────────────────────────────────────────────────────
+
+# Ghostty has sensible defaults, but you can customize:
+keybind = cmd+t=new_tab
+# keybind = cmd+shift+t=new_window
+# keybind = cmd+d=split_right
+# keybind = cmd+shift+d=split_down
+
+# Cmd+Shift+Arrow = select to beginning/end of line (IDE-style)
+keybind = cmd+shift+left=text:\x1b[1;2H
+keybind = cmd+shift+right=text:\x1b[1;2F
+
+# ─── Cursor ───────────────────────────────────────────────────────────────────
+
+cursor-style = block
+cursor-style-blink = true
+
+# ─── Bell ─────────────────────────────────────────────────────────────────────
+
+# Visual bell instead of audible
+# bell = false
+# visual-bell = true
+
+# ─── Performance ──────────────────────────────────────────────────────────────
+
+# Ghostty is already fast, but if you want to tune:
+# frame-rate = 120
