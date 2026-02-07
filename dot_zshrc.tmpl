@@ -77,7 +77,7 @@ eval "$(starship init zsh)"
 
 [[ -f "$HOME/.aliases" ]] && source "$HOME/.aliases"
 
-{{- if eq .chezmoi.hostname "kamino" }}
+{{- if or (eq .chezmoi.hostname "kamino") (eq .chezmoi.hostname "mustafar") }}
 # Homelab-specific aliases
 [[ -f "$HOME/repos/homelab/.aliases" ]] && source "$HOME/repos/homelab/.aliases"
 {{- end }}
