@@ -1,0 +1,47 @@
+# Homebrew Bundle - run with: brew bundle --global
+# https://github.com/Homebrew/homebrew-bundle
+
+# ─── Taps ─────────────────────────────────────────────────────────────────────
+
+tap "homebrew/cask-fonts"
+
+# ─── CLI Tools ────────────────────────────────────────────────────────────────
+
+brew "bat"              # Better cat
+brew "chezmoi"          # Dotfile management
+brew "direnv"           # Per-directory env
+brew "eza"              # Better ls
+brew "fd"               # Better find
+brew "fzf"              # Fuzzy finder
+brew "gh"               # GitHub CLI
+brew "git-filter-repo"  # Git history surgery
+brew "jq"               # JSON processor
+brew "nmap"             # Network scanner
+brew "node"             # Node.js
+brew "ripgrep"          # Better grep
+brew "rsync"            # File sync
+brew "speedtest-cli"    # Internet speed test
+brew "starship"         # Prompt
+brew "timg"             # Terminal image viewer
+brew "tree"             # Directory tree
+brew "xcodes"           # Xcode version manager
+
+# ─── Fonts ────────────────────────────────────────────────────────────────────
+
+cask "font-jetbrains-mono"
+
+# ─── Applications ─────────────────────────────────────────────────────────────
+
+cask "1password-cli"    # 1Password CLI
+cask "caffeine"         # Keep screen awake
+cask "claude-code"      # Claude Code
+cask "discord"          # Chat
+cask "dropbox"          # File sync
+cask "firefox"          # Browser
+cask "fork"             # Git GUI
+cask "ghostty"          # Terminal
+cask "spotify"          # Music
+cask "steam"            # Games
+cask "sublime-text"     # Editor
+cask "vlc"              # Media player
+cask "warp"             # Terminal (backup for IDE features)
