@@ -56,6 +56,9 @@ shell-integration = zsh
 
 # ─── Keybindings ──────────────────────────────────────────────────────────────
 
+# Make Option act as Alt (left only, so right Option still does special chars)
+macos-option-as-alt = left
+
 # Ghostty has sensible defaults, but you can customize:
 keybind = cmd+t=new_tab
 # keybind = cmd+shift+t=new_window

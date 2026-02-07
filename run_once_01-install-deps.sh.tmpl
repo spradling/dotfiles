@@ -136,6 +136,15 @@ else
   echo "  ✓ zsh-autosuggestions already installed"
 fi
 
+# zsh-shift-select (IDE-style shift+arrow selection)
+if [[ ! -d "$ZSH_PLUGIN_DIR/zsh-shift-select" ]]; then
+  echo "  Installing zsh-shift-select..."
+  git clone --depth 1 https://github.com/jirutka/zsh-shift-select.git \
+    "$ZSH_PLUGIN_DIR/zsh-shift-select"
+else
+  echo "  ✓ zsh-shift-select already installed"
+fi
+
 # ─── Done ─────────────────────────────────────────────────────────────────────
 
 echo ""
