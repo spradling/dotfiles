@@ -69,7 +69,10 @@ fi
 # Prompt
 # ============================================================================
 
-eval "$(starship init zsh)"
+# Skip starship in Warp (it breaks Warp's IDE features)
+if [[ "$TERM_PROGRAM" != "WarpTerminal" ]]; then
+  eval "$(starship init zsh)"
+fi
 
 # ============================================================================
 # Aliases

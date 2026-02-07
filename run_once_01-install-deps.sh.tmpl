@@ -22,46 +22,11 @@ if ! command -v brew &> /dev/null; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
-# Core tools
-BREW_PACKAGES=(
-  starship      # Prompt
-  fzf           # Fuzzy finder
-  bat           # Better cat
-  eza           # Better ls (optional, aliases use ls)
-  ripgrep       # Better grep
-  fd            # Better find
-  tree          # Directory tree
-  jq            # JSON processor
-  direnv        # Per-directory env
-  gh            # GitHub CLI
-)
+# Install everything from Brewfile
+echo "📦 Installing from Brewfile..."
+brew bundle --global --no-lock
 
-echo "📦 Installing Homebrew packages..."
-for pkg in "${BREW_PACKAGES[@]}"; do
-  if ! brew list "$pkg" &>/dev/null; then
-    echo "  Installing $pkg..."
-    brew install "$pkg"
-  else
-    echo "  ✓ $pkg already installed"
-  fi
-done
-
-# Ghostty (if not already installed)
-if ! brew list --cask ghostty &>/dev/null 2>&1; then
-  echo "👻 Installing Ghostty..."
-  brew install --cask ghostty
-else
-  echo "  ✓ Ghostty already installed"
-fi
-
-# Install JetBrains Mono font
-if ! brew list --cask font-jetbrains-mono &>/dev/null 2>&1; then
-  echo "🔤 Installing JetBrains Mono font..."
-  brew tap homebrew/cask-fonts 2>/dev/null || true
-  brew install --cask font-jetbrains-mono
-else
-  echo "  ✓ JetBrains Mono already installed"
-fi
+echo "  ✓ Homebrew packages installed"
 
 {{ else if eq .chezmoi.os "linux" -}}
 # ═══════════════════════════════════════════════════════════════════════════════
