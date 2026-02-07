@@ -93,7 +93,13 @@ fi
 
 # fzf (fuzzy finder)
 if command -v fzf &> /dev/null; then
-  source <(fzf --zsh)
+  # Newer fzf (0.48+) uses --zsh, older uses keybinding files
+  if fzf --zsh &> /dev/null; then
+    source <(fzf --zsh)
+  elif [[ -f /usr/share/doc/fzf/examples/key-bindings.zsh ]]; then
+    source /usr/share/doc/fzf/examples/key-bindings.zsh
+    source /usr/share/doc/fzf/examples/completion.zsh
+  fi
 fi
 
 {{- if eq .chezmoi.os "darwin" }}
