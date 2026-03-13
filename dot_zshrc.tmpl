@@ -51,10 +51,6 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 # all other non-alphanumerics)
 WORDCHARS='*_[]~&;!#$%^(){}<>' # default except '/' and ':' count as words
 
-# Up/Down arrow searches history with current prefix
-bindkey "^[[A" .history-beginning-search-backward    # Up arrow
-bindkey "^[[B" .history-beginning-search-forward     # Down arrow
-
 # ============================================================================
 # Plugins (no framework, just git clone)
 # ============================================================================
@@ -119,6 +115,10 @@ fi
 # Haskell (ghcup) - only if installed
 [[ -f "$HOME/.ghcup/env" ]] && source "$HOME/.ghcup/env"
 {{- end }}
+
+# Up/Down arrow searches history with current prefix
+bindkey "^[[A" .history-beginning-search-backward    # Up arrow
+bindkey "^[[B" .history-beginning-search-forward     # Down arrow
 
 # ============================================================================
 # Local overrides (not tracked by chezmoi)
