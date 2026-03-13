@@ -52,11 +52,8 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 WORDCHARS='*_[]~&;!#$%^(){}<>' # default except '/' and ':' count as words
 
 # Up/Down arrow searches history with current prefix
-autoload -U up-line-or-beginning-search down-line-or-beginning-search
-zle -N up-line-or-beginning-search
-zle -N down-line-or-beginning-search
-bindkey "^[[A" up-line-or-beginning-search    # Up arrow
-bindkey "^[[B" down-line-or-beginning-search  # Down arrow
+bindkey "^[[A" .history-beginning-search-backward    # Up arrow
+bindkey "^[[B" .history-beginning-search-forward     # Down arrow
 
 # ============================================================================
 # Plugins (no framework, just git clone)
