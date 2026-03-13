@@ -137,6 +137,11 @@ alias cmd='chezmoi diff'
 alias cmcd='chezmoi cd'
 alias cmra='chezmoi re-add'
 
+# Chezmoi git workflow
+cmpush() {
+  (cd ~/.local/share/chezmoi && git add -A && git commit -m "$1" && git push)
+}
+
 # ─── Quick Directories ────────────────────────────────────────────────────────
 
 alias repos='cd ~/repos'

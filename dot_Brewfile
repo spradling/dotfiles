@@ -1,10 +1,6 @@
 # Homebrew Bundle - run with: brew bundle --global
 # https://github.com/Homebrew/homebrew-bundle
 
-# ─── Taps ─────────────────────────────────────────────────────────────────────
-
-tap "homebrew/cask-fonts"
-
 # ─── CLI Tools ────────────────────────────────────────────────────────────────
 
 brew "bat"              # Better cat
