@@ -117,10 +117,20 @@ fi
 {{- end }}
 
 # Up/Down arrow searches history with current prefix
-bindkey "^[[A" .history-beginning-search-backward    # Up arrow (xterm)
-bindkey "^[OA" .history-beginning-search-backward    # Up arrow (terminfo)
-bindkey "^[[B" .history-beginning-search-forward     # Down arrow (xterm)
-bindkey "^[OB" .history-beginning-search-forward     # Down arrow (terminfo)
+{{- if eq .chezmoi.os "darwin" }}
+# macOS - use autoloaded functions
+autoload -U up-line-or-beginning-search down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+bindkey "^[[A" up-line-or-beginning-search
+bindkey "^[[B" down-line-or-beginning-search
+{{- else }}
+# Linux - use builtins with both key codes
+bindkey "^[[A" .history-beginning-search-backward
+bindkey "^[OA" .history-beginning-search-backward
+bindkey "^[[B" .history-beginning-search-forward
+bindkey "^[OB" .history-beginning-search-forward
+{{- end }}
 
 # ============================================================================
 # Local overrides (not tracked by chezmoi)
