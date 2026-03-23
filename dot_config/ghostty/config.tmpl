@@ -14,15 +14,12 @@ font-size = 14
 
 # ─── Theme ────────────────────────────────────────────────────────────────────
 
-# Built-in themes: https://ghostty.org/docs/config/reference#theme
-# Some good ones: Catppuccin Mocha, Tokyo Night, Dracula, One Dark, Nord
-# theme = auto
-theme = "catppuccin-mocha"
-
-# Or set colors manually:
-# background = 1e1e2e
-# foreground = cdd6f4
-# cursor-color = f5e0dc
+# Built-in themes: browse with `ghostty +list-themes`
+{{ if .personal -}}
+theme = "Catppuccin Mocha"
+{{ else -}}
+theme = "Poimandres Storm"
+{{ end -}}
 
 # Slight transparency (1.0 = opaque)
 background-opacity = 0.95
