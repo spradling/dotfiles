@@ -13,6 +13,11 @@ Thumbs.db
 .zshrc.local
 .aliases.local
 
+{{ if not .personal -}}
+# Don't sync global gitignore on work machines
+.config/git/ignore
+{{ end -}}
+
 {{ if ne .chezmoi.os "darwin" -}}
 # Ghostty is macOS-only (no point installing config on headless Linux)
 .config/ghostty
