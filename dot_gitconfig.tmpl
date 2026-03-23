@@ -16,7 +16,7 @@
 
 [push]
   default = current
-  autoSetupRemote = true
+  autoSetupRemote = false
 
 [fetch]
   prune = true
@@ -27,12 +27,14 @@
 [diff]
   colorMoved = default
 
+{{ if .personal -}}
 [rebase]
   autoStash = true
 
 [rerere]
   enabled = true
 
+{{ end -}}
 [alias]
   # Shortcuts
   co = checkout
@@ -61,6 +63,17 @@
 {{ if eq .chezmoi.os "darwin" -}}
 [credential]
   helper = osxkeychain
+{{ end -}}
+
+{{ if not .personal -}}
+[filter "lfs"]
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
+  required = true
+  clean = git-lfs clean -- %f
+
+[commit]
+  gpgsign = true
 {{ end -}}
 
 {{- if eq .chezmoi.hostname "kamino" }}
