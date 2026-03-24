@@ -32,7 +32,7 @@ style = "bold cyan"
 "Downloads" = " "
 "Music" = " "
 "Pictures" = " "
-"Obsidian" = " "
+"Obsidian" = " "
 
 # Git branch
 [git_branch]
@@ -80,34 +80,34 @@ disabled = true
 # Language versions - only show when relevant files exist
 [nodejs]
 format = "[$symbol($version )]($style)"
-symbol = " "
+symbol = " "
 
 [python]
 format = "[$symbol($version )]($style)"
-symbol = " "
+symbol = " "
 
 [rust]
 format = "[$symbol($version )]($style)"
-symbol = " "
+symbol = " "
 
 [golang]
 format = "[$symbol($version )]($style)"
-symbol = " "
+symbol = " "
 
 [swift]
 format = "[$symbol($version )]($style)"
-symbol = " "
+symbol = " "
 
 # Docker context - only show if not default
 [docker_context]
 format = "[$symbol$context]($style) "
-symbol = " "
+symbol = " "
 only_with_files = true
 
 # Time - show timestamp for each command
 [time]
 disabled = false
-format = "[ $time]($style) "
+format = "[ $time]($style) "
 style = "dimmed white"
 time_format = "%H:%M:%S"  # 24hr, or "%I:%M %p" for 12hr
 
