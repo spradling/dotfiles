@@ -16,7 +16,10 @@ font-size = 14
 
 # Built-in themes: browse with `ghostty +list-themes`
 {{ if .personal -}}
-theme = "Catppuccin Mocha"
+theme = "Ryuuko"
+# theme = "Catppuccin Macchiato"
+# theme = "Catppuccin Mocha"
+# theme = "Tomorrow Night Eighties"
 {{ else -}}
 theme = "Poimandres Storm"
 {{ end -}}
@@ -81,3 +84,7 @@ cursor-style-blink = true
 
 # Ghostty is already fast, but if you want to tune:
 # frame-rate = 120
+
+# --- SSH -----------------------------
+# enable Ghostty's built-in shell integration that installs its terminfo on all new remotes
+shell-integration-features = ssh-terminfo,ssh-env
