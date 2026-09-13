@@ -39,7 +39,7 @@ setopt NO_BANG_HIST           # Disable ! history expansion (prevents paste issu
 
 autoload -Uz compinit
 # Only regenerate completion dump once a day
-if [[ -n ${ZDOTDIR}/.zcompdump(#qN.mh+24) ]]; then
+if [[ -n ${ZDOTDIR:-$HOME}/.zcompdump(#qN.mh+24) ]]; then
   compinit
 else
   compinit -C
@@ -58,11 +58,6 @@ WORDCHARS='*_[]~&;!#$%^(){}<>' # default except '/' and ':' count as words
 # Plugins (no framework, just git clone)
 # ============================================================================
 
-# Fast syntax highlighting
-if [[ -d "$HOME/.zsh/zsh-syntax-highlighting" ]]; then
-  source "$HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-fi
-
 # Autosuggestions (fish-style)
 if [[ -d "$HOME/.zsh/zsh-autosuggestions" ]]; then
   source "$HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh"
@@ -72,6 +67,12 @@ fi
 # Shift+arrow selection (like an IDE)
 if [[ -d "$HOME/.zsh/zsh-shift-select" ]]; then
   source "$HOME/.zsh/zsh-shift-select/zsh-shift-select.plugin.zsh"
+fi
+
+# Syntax highlighting (must be sourced last -- it wraps zle widgets, so
+# anything that defines/wraps widgets has to load before it)
+if [[ -d "$HOME/.zsh/zsh-syntax-highlighting" ]]; then
+  source "$HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 fi
 
 # ============================================================================
