@@ -1,15 +1,16 @@
 # Starship prompt config
 # https://starship.rs/config/
 
-# Insanely fast prompt (timeout in ms)
-command_timeout = 500
+# Networked filesystems (kamino's NFS-mounted ~/nfs) can be slow to resolve
+# symlinks for directory/git scanning -- don't follow them
+follow_symlinks = false
 
 # Don't print a new line at the start of the prompt
 add_newline = true
 
 # Left prompt layout
 format = """
-$username$hostname$directory$git_branch$git_status$nodejs$python$rust$swift$docker_context$cmd_duration
+$username$hostname$sudo$directory$git_branch$git_status$nodejs$python$rust$golang$swift$container$docker_context$jobs$cmd_duration
 $character"""
 
 # Right prompt - timestamp aligned right
@@ -103,6 +104,22 @@ symbol = " "
 format = "[$symbol$context]($style) "
 symbol = " "
 only_with_files = true
+
+# Container awareness - distinct from docker_context (which shows the
+# active docker CLI context); this detects when the shell itself is
+# running inside a container (e.g. after `docker exec -it ... bash`)
+[container]
+disabled = false
+
+# Cached sudo credential indicator - meaningful on kamino (constant sudo
+# for docker/NFS admin), harmless no-op on the Mac
+[sudo]
+disabled = false
+
+# Background job indicator - catches a forgotten `docker compose logs -f`
+# or long rsync backgrounded in a second pane
+[jobs]
+disabled = false
 
 # Time - show timestamp for each command
 [time]
