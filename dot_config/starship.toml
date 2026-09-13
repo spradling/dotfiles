@@ -8,10 +8,11 @@ follow_symlinks = false
 # Don't print a new line at the start of the prompt
 add_newline = true
 
-# Left prompt layout -- $time trails the context line (not the input
-# line) so it never gets swept into a copy/paste of the actual command
+# Left prompt layout -- $fill pads out the rest of the context line so
+# $time floats right on THAT line instead of the input line (right_format
+# only binds to the input line, which kept getting swept into copy/pastes)
 format = """
-$username$hostname$sudo$directory$git_branch$git_status$nodejs$python$rust$golang$swift$container$docker_context$jobs$cmd_duration$time
+$username$hostname$sudo$directory$git_branch$git_status$nodejs$python$rust$golang$swift$container$docker_context$jobs$cmd_duration$fill$time
 $character"""
 
 # Replace the default prompt symbol
@@ -31,7 +32,7 @@ style = "bold #5de4c7"
 "Downloads" = " "
 "Music" = " "
 "Pictures" = " "
-"Obsidian" = " "
+"Obsidian" = " "
 
 # Git branch
 [git_branch]
@@ -71,6 +72,11 @@ format = "[$hostname]($style):"
 min_time = 2_000
 style = "bold #fffac2"
 format = "[󰥔 $duration]($style) "
+
+# Fill -- pads the context line so $time (placed after it in format)
+# floats to the right edge of that line instead of the input line
+[fill]
+symbol = " "
 
 # Package version - disabled (slow)
 [package]
