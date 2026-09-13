@@ -8,13 +8,11 @@ follow_symlinks = false
 # Don't print a new line at the start of the prompt
 add_newline = true
 
-# Left prompt layout
+# Left prompt layout -- $time trails the context line (not the input
+# line) so it never gets swept into a copy/paste of the actual command
 format = """
-$username$hostname$sudo$directory$git_branch$git_status$nodejs$python$rust$golang$swift$container$docker_context$jobs$cmd_duration
+$username$hostname$sudo$directory$git_branch$git_status$nodejs$python$rust$golang$swift$container$docker_context$jobs$cmd_duration$time
 $character"""
-
-# Right prompt - timestamp aligned right
-right_format = """$time"""
 
 # Replace the default prompt symbol
 [character]
@@ -33,7 +31,7 @@ style = "bold #5de4c7"
 "Downloads" = " "
 "Music" = " "
 "Pictures" = " "
-"Obsidian" = " "
+"Obsidian" = " "
 
 # Git branch
 [git_branch]
