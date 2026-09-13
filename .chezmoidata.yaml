@@ -24,6 +24,7 @@ cliTools:
     - { brew: fzf, apt: fzf, desc: "Fuzzy finder" }
     - { brew: gh, apt: gh, desc: "GitHub CLI" }
     - { brew: git-filter-repo, apt: git-filter-repo, desc: "Git history surgery" }
+    - { brew: glow, apt: glow, desc: "Markdown viewer" }
     - { brew: jq, apt: jq, desc: "JSON processor" }
     - { brew: rsync, apt: rsync, desc: "File sync" }
     - { brew: timg, apt: chafa, desc: "Terminal image/media viewer" }
