@@ -86,7 +86,10 @@ fi
 
 [[ -f "$HOME/.aliases" ]] && source "$HOME/.aliases"
 
-{{- if or (eq .chezmoi.hostname "kamino") (eq .chezmoi.hostname "mustafar") }}
+{{- if eq .chezmoi.hostname "kamino" }}
+# Homelab-specific aliases (live NFS-mounted stack)
+[[ -f "$HOME/nfs/.aliases" ]] && source "$HOME/nfs/.aliases"
+{{- else if eq .chezmoi.hostname "mustafar" }}
 # Homelab-specific aliases
 [[ -f "$HOME/repos/homelab/.aliases" ]] && source "$HOME/repos/homelab/.aliases"
 {{- end }}
