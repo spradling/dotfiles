@@ -18,15 +18,15 @@ right_format = """$time"""
 
 # Replace the default prompt symbol
 [character]
-success_symbol = "[❯](bold green)"
-error_symbol = "[❯](bold red)"
-vimcmd_symbol = "[❮](bold green)"
+success_symbol = "[❯](bold #5de4c7)"
+error_symbol = "[❯](bold #d0679d)"
+vimcmd_symbol = "[❮](bold #5de4c7)"
 
 # Directory - show 3 levels, truncate to repo root
 [directory]
 truncation_length = 3
 truncate_to_repo = true
-style = "bold cyan"
+style = "bold #5de4c7"
 
 [directory.substitutions]
 "Documents" = "󰈙 "
@@ -38,11 +38,11 @@ style = "bold cyan"
 # Git branch
 [git_branch]
 symbol = " "
-style = "bold purple"
+style = "bold #f087bd"
 
 # Git status - readable, spaced out
 [git_status]
-style = "bold yellow"
+style = "#fffac2"
 format = '([$all_status$ahead_behind]($style) )'
 ahead = "↑${count} "
 behind = "↓${count} "
@@ -58,21 +58,21 @@ renamed = "R${count} "
 # Only show username if SSH or root
 [username]
 show_always = false
-style_user = "bold blue"
-style_root = "bold red"
+style_user = "bold #89ddff"
+style_root = "bold #f087bd"
 format = "[$user]($style)@"
 
 # Only show hostname if SSH
 [hostname]
 ssh_only = true
-style = "bold green"
+style = "bold #add7ff"
 format = "[$hostname]($style):"
 
 # Command duration - only if > 2 seconds
 [cmd_duration]
 min_time = 2_000
-style = "bold yellow"
-format = "[$duration]($style) "
+style = "bold #fffac2"
+format = "[󰥔 $duration]($style) "
 
 # Package version - disabled (slow)
 [package]
@@ -125,7 +125,7 @@ disabled = false
 [time]
 disabled = false
 format = "[ $time]($style) "
-style = "dimmed white"
+style = "dimmed #a6accd"
 time_format = "%H:%M:%S"  # 24hr, or "%I:%M %p" for 12hr
 
 # Kubernetes - disabled (slow, uncomment if you use k8s)
