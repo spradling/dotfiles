@@ -15,6 +15,9 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_CACHE_HOME="$HOME/.cache"
 
+# User-local binaries (e.g. the bat/fd symlinks run_once sets up on Linux)
+export PATH="$HOME/.local/bin:$PATH"
+
 # Editor
 export EDITOR="vim"
 export VISUAL="$EDITOR"

@@ -58,12 +58,30 @@ if [[ -n "$PKG_MGR" ]]; then
   $UPDATE_CMD
 
   # Core tools (package names vary by distro)
-  PACKAGES=(fzf bat ripgrep fd-find tree jq direnv)
-  
+  PACKAGES=(fzf bat fd-find tree jq git-filter-repo rsync eza chafa{{ if .personal }} nmap ripgrep{{ end }})
+
   for pkg in "${PACKAGES[@]}"; do
     echo "  Installing $pkg..."
     $INSTALL_CMD "$pkg" 2>/dev/null || echo "  ⚠️  $pkg not found in repos"
   done
+
+  # bat/fd-find are renamed on Debian/Ubuntu due to name collisions with
+  # unrelated older packages (batcat, fdfind) -- symlink so `bat`/`fd`
+  # still work like everywhere else
+  mkdir -p "$HOME/.local/bin"
+  command -v batcat &> /dev/null && ln -sf "$(command -v batcat)" "$HOME/.local/bin/bat"
+  command -v fdfind &> /dev/null && ln -sf "$(command -v fdfind)" "$HOME/.local/bin/fd"
+
+  # GitHub CLI isn't in Debian/Ubuntu's default repos -- add the official one
+  if [[ "$PKG_MGR" == "apt" ]] && ! command -v gh &> /dev/null; then
+    echo "  Installing gh (GitHub CLI)..."
+    sudo mkdir -p -m 755 /etc/apt/keyrings
+    curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null
+    sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
+    sudo apt update
+    sudo apt install -y gh
+  fi
 fi
 
 # Install Starship
