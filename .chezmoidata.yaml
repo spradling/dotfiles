@@ -1,0 +1,33 @@
+# Shared, non-secret, repo-wide data. Machine-specific answers (email, name,
+# personal) stay in .chezmoi.toml.tmpl via promptStringOnce/promptBoolOnce --
+# this file is for static facts that don't need per-machine prompting.
+
+# Hostnames that count as "homelab" boxes, so templates can check membership
+# once instead of repeating {{ eq .chezmoi.hostname "kamino" }}-style
+# literals at every call site. Note: kamino and mustafar currently need
+# *different* homelab-alias paths (see dot_zshrc.tmpl), so this group isn't
+# used everywhere hostname logic appears -- only where the same check would
+# otherwise be duplicated verbatim.
+hostGroups:
+  homelab:
+    - kamino
+
+# Cross-platform CLI tools, rendered into both dot_Brewfile.tmpl (macOS) and
+# run_onchange_01-install-deps.sh.tmpl (Linux/apt) from this one list, so
+# adding a tool means editing here once instead of keeping two
+# hand-maintained lists in sync by hand (which already drifted once).
+cliTools:
+  always:
+    - { brew: bat, apt: bat, desc: "Better cat" }
+    - { brew: eza, apt: eza, desc: "Better ls" }
+    - { brew: fd, apt: fd-find, desc: "Better find" }
+    - { brew: fzf, apt: fzf, desc: "Fuzzy finder" }
+    - { brew: gh, apt: gh, desc: "GitHub CLI" }
+    - { brew: git-filter-repo, apt: git-filter-repo, desc: "Git history surgery" }
+    - { brew: jq, apt: jq, desc: "JSON processor" }
+    - { brew: rsync, apt: rsync, desc: "File sync" }
+    - { brew: timg, apt: chafa, desc: "Terminal image/media viewer" }
+    - { brew: tree, apt: tree, desc: "Directory tree" }
+  personal:
+    - { brew: nmap, apt: nmap, desc: "Network scanner" }
+    - { brew: ripgrep, apt: ripgrep, desc: "Better grep" }

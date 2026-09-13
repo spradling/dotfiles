@@ -2,26 +2,23 @@
 # https://github.com/Homebrew/homebrew-bundle
 
 # ─── CLI Tools ────────────────────────────────────────────────────────────────
+# Cross-platform tools come from .chezmoidata.yaml (cliTools) so this list
+# and the Linux apt list in run_onchange_01-install-deps.sh.tmpl can't drift
+# apart -- add a tool there once, it shows up in both places.
 
-brew "bat"              # Better cat
+{{ range .cliTools.always -}}
+brew "{{ .brew }}" # {{ .desc }}
+{{ end -}}
 brew "chezmoi"          # Dotfile management
-brew "eza"              # Better ls
-brew "fd"               # Better find
-brew "fzf"              # Fuzzy finder
-brew "gh"               # GitHub CLI
-brew "git-filter-repo"  # Git history surgery
-brew "jq"               # JSON processor
-brew "rsync"            # File sync
 brew "starship"         # Prompt
-brew "timg"             # Terminal image viewer
-brew "tree"             # Directory tree
 brew "xcodes"           # Xcode version manager
 {{ if .personal -}}
 brew "speedtest-cli"    # Internet speed test
 brew "direnv"           # Per-directory env
-brew "nmap"             # Network scanner
 brew "node"             # Node.js
-brew "ripgrep"          # Better grep
+{{ range .cliTools.personal -}}
+brew "{{ .brew }}" # {{ .desc }}
+{{ end -}}
 {{ end -}}
 
 # ─── Fonts ────────────────────────────────────────────────────────────────────

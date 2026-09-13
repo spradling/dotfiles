@@ -76,7 +76,7 @@
   gpgsign = true
 {{ end -}}
 
-{{- if eq .chezmoi.hostname "kamino" }}
+{{- if has .chezmoi.hostname .hostGroups.homelab }}
 [safe]
   directory = /home/cspan/nfs
 {{ end -}}
