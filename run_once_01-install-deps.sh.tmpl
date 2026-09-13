@@ -76,39 +76,10 @@ fi
 
 {{ end -}}
 
-# ─── ZSH Plugins (cross-platform) ─────────────────────────────────────────────
-
-echo "🔌 Setting up ZSH plugins..."
-
-ZSH_PLUGIN_DIR="$HOME/.zsh"
-mkdir -p "$ZSH_PLUGIN_DIR"
-
-# zsh-syntax-highlighting
-if [[ ! -d "$ZSH_PLUGIN_DIR/zsh-syntax-highlighting" ]]; then
-  echo "  Installing zsh-syntax-highlighting..."
-  git clone --depth 1 https://github.com/zsh-users/zsh-syntax-highlighting.git \
-    "$ZSH_PLUGIN_DIR/zsh-syntax-highlighting"
-else
-  echo "  ✓ zsh-syntax-highlighting already installed"
-fi
-
-# zsh-autosuggestions
-if [[ ! -d "$ZSH_PLUGIN_DIR/zsh-autosuggestions" ]]; then
-  echo "  Installing zsh-autosuggestions..."
-  git clone --depth 1 https://github.com/zsh-users/zsh-autosuggestions.git \
-    "$ZSH_PLUGIN_DIR/zsh-autosuggestions"
-else
-  echo "  ✓ zsh-autosuggestions already installed"
-fi
-
-# zsh-shift-select (IDE-style shift+arrow selection)
-if [[ ! -d "$ZSH_PLUGIN_DIR/zsh-shift-select" ]]; then
-  echo "  Installing zsh-shift-select..."
-  git clone --depth 1 https://github.com/jirutka/zsh-shift-select.git \
-    "$ZSH_PLUGIN_DIR/zsh-shift-select"
-else
-  echo "  ✓ zsh-shift-select already installed"
-fi
+# ZSH plugins (zsh-syntax-highlighting, zsh-autosuggestions,
+# zsh-shift-select) are declared as chezmoi externals in
+# .chezmoiexternal.toml and are fetched/updated by `chezmoi apply` itself
+# — no manual cloning needed here.
 
 # ─── Done ─────────────────────────────────────────────────────────────────────
 
