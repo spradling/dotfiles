@@ -17,6 +17,13 @@ if ls --group-directories-first &>/dev/null 2>&1; then
   alias ls='ls --color=auto --group-directories-first'
   alias ll='ls -alh --color=auto --group-directories-first'
   alias la='ls -A --color=auto --group-directories-first'
+
+  # GNU ls's default colors for unusual-permission directories (e.g. a
+  # world-writable NFS mount) clash badly against a dark theme -- override
+  # just those codes on top of the standard dircolors base
+  eval "$(dircolors -b 2>/dev/null)"
+  LS_COLORS="$LS_COLORS:ow=1;38;2;240;135;189:tw=1;38;2;208;103;157:st=1;38;2;137;221;255"
+  export LS_COLORS
 else
   # BSD/macOS ls
   alias ls='ls -G'
