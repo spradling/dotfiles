@@ -1,5 +1,6 @@
 # ~/.zshrc - Minimal, fast, portable
 # Managed by chezmoi - edit source with `chezmoi edit ~/.zshrc`
+# Rendered from {{ .chezmoi.sourceFile }} for {{ .chezmoi.hostname }} ({{ .chezmoi.os }}, machineType={{ .machineType }})
 
 # ============================================================================
 # Environment
@@ -22,7 +23,10 @@ export PATH="$HOME/.local/bin:$PATH"
 export EDITOR="vim"
 export VISUAL="$EDITOR"
 
+# ============================================================================
 # History
+# ============================================================================
+
 HISTFILE="$HOME/.zsh_history"
 HISTSIZE=50000
 SAVEHIST=50000
@@ -49,10 +53,12 @@ fi
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 
 # Define what counts as a word-boundary for opt+L/R cursor navigation.
-# This is a list of "all non-alphanum chars that should still be 
+# This is a list of "all non-alphanum chars that should still be
 # considered part of a word (e.g. *don't* break on these but break on
 # all other non-alphanumerics)
-WORDCHARS='*_[]~&;!#$%^(){}<>' # default except '/' and ':' count as words
+# Removes ? - . = / from zsh's default, so path segments and vX.Y.Z-style
+# versions become word boundaries (e.g. opt+L stops at each path segment)
+WORDCHARS='*_[]~&;!#$%^(){}<>'
 
 # ============================================================================
 # Plugins (no framework, just git clone)
@@ -123,6 +129,10 @@ fi
 [[ -f "$HOME/.ghcup/env" ]] && source "$HOME/.ghcup/env"
 {{- end }}
 
+# ============================================================================
+# Keybindings
+# ============================================================================
+
 # Up/Down arrow searches history with current prefix
 {{- if eq .chezmoi.os "darwin" }}
 # macOS - use autoloaded functions
@@ -132,7 +142,9 @@ zle -N down-line-or-beginning-search
 bindkey "^[[A" up-line-or-beginning-search
 bindkey "^[[B" down-line-or-beginning-search
 {{- else }}
-# Linux - use builtins with both key codes
+# Linux - use builtins. Bind both ^[[A/B (normal mode) and ^[OA/OB
+# (application mode) since some Linux terminals/multiplexers emit the
+# latter; macOS's Terminal.app/iTerm don't, so that branch only needs one
 bindkey "^[[A" .history-beginning-search-backward
 bindkey "^[OA" .history-beginning-search-backward
 bindkey "^[[B" .history-beginning-search-forward
