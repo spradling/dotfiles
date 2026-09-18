@@ -59,7 +59,10 @@ if [[ -n "$PKG_MGR" ]]; then
   $UPDATE_CMD
 
   # Core tools, from .chezmoidata.yaml's cliTools (shared with dot_Brewfile.tmpl)
-  PACKAGES=({{ range .cliTools.always }}{{ .apt }} {{ end }}{{ if .personal }}{{ range .cliTools.personal }}{{ .apt }} {{ end }}{{ end }})
+  # zsh is Linux-only here (not in .chezmoidata's shared cliTools) --
+  # macOS already ships zsh and stays on Apple's build deliberately,
+  # rather than pulling in Homebrew's
+  PACKAGES=(zsh {{ range .cliTools.always }}{{ .apt }} {{ end }}{{ if .personal }}{{ range .cliTools.personal }}{{ .apt }} {{ end }}{{ end }})
 
   for pkg in "${PACKAGES[@]}"; do
     echo "  Installing $pkg..."
