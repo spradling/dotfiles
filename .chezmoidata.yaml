@@ -32,3 +32,7 @@ cliTools:
   personal:
     - { brew: nmap, apt: nmap, desc: "Network scanner" }
     - { brew: ripgrep, apt: ripgrep, desc: "Better grep" }
+  # Linux-only server utilities with no macOS equivalent -- rendered into
+  # the apt list only, never the Brewfile, so entries carry no brew name
+  linux:
+    - { apt: sysstat, desc: "iostat/pidstat/sar performance tools" }

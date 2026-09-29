@@ -62,7 +62,8 @@ if [[ -n "$PKG_MGR" ]]; then
   # zsh is Linux-only here (not in .chezmoidata's shared cliTools) --
   # macOS already ships zsh and stays on Apple's build deliberately,
   # rather than pulling in Homebrew's
-  PACKAGES=(zsh {{ range .cliTools.always }}{{ .apt }} {{ end }}{{ if .personal }}{{ range .cliTools.personal }}{{ .apt }} {{ end }}{{ end }})
+  # cliTools.linux is the Linux-only server utility list (no Brewfile side)
+  PACKAGES=(zsh {{ range .cliTools.always }}{{ .apt }} {{ end }}{{ range .cliTools.linux }}{{ .apt }} {{ end }}{{ if .personal }}{{ range .cliTools.personal }}{{ .apt }} {{ end }}{{ end }})
 
   for pkg in "${PACKAGES[@]}"; do
     echo "  Installing $pkg..."
