@@ -90,8 +90,9 @@ fi
 # Prompt
 # ============================================================================
 
-# Skip starship in Warp (it breaks Warp's IDE features)
-if [[ "$TERM_PROGRAM" != "WarpTerminal" ]]; then
+# Skip starship in Warp (it breaks Warp's IDE features), and wherever it
+# isn't installed
+if [[ "$TERM_PROGRAM" != "WarpTerminal" ]] && command -v starship &> /dev/null; then
   eval "$(starship init zsh)"
 fi
 

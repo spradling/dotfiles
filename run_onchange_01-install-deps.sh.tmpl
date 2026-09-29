@@ -36,6 +36,15 @@ echo "  ✓ Homebrew packages installed"
 
 echo "🐧 Detected Linux"
 
+{{ if has .chezmoi.hostname .hostGroups.appliance -}}
+# Appliance host (see hostGroups.appliance in .chezmoidata.yaml): no system
+# packages, and nothing installed outside $HOME
+echo "📦 Appliance host, skipping system packages"
+mkdir -p "$HOME/.local/bin"
+STARSHIP_INSTALL_ARGS=(--bin-dir "$HOME/.local/bin")
+{{ else -}}
+STARSHIP_INSTALL_ARGS=()
+
 # Detect package manager
 if command -v apt &> /dev/null; then
   PKG_MGR="apt"
@@ -88,11 +97,13 @@ if [[ -n "$PKG_MGR" ]]; then
     sudo apt install -y gh
   fi
 fi
+{{ end -}}
 
-# Install Starship
-if ! command -v starship &> /dev/null; then
+# Install Starship. ~/.local/bin is checked directly because it isn't on
+# PATH yet the first time this runs on a fresh machine
+if ! command -v starship &> /dev/null && [[ ! -x "$HOME/.local/bin/starship" ]]; then
   echo "⭐ Installing Starship..."
-  curl -sS https://starship.rs/install.sh | sh -s -- -y
+  curl -sS https://starship.rs/install.sh | sh -s -- -y "${STARSHIP_INSTALL_ARGS[@]}"
 else
   echo "  ✓ Starship already installed"
 fi

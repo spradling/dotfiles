@@ -11,6 +11,14 @@
 hostGroups:
   homelab:
     - kamino
+  # Appliance OSes (TrueNAS) where the base system is off-limits: /usr is
+  # read-only, apt is a stub that refuses to run, and anything written
+  # outside $HOME is unsupported and lost on upgrade. Hosts here get the
+  # dotfiles but no system packages. coruscant reports its hostname as
+  # "truenas", so both names are listed.
+  appliance:
+    - coruscant
+    - truenas
 
 # Cross-platform CLI tools, rendered into both dot_Brewfile.tmpl (macOS) and
 # run_onchange_01-install-deps.sh.tmpl (Linux/apt) from this one list, so
