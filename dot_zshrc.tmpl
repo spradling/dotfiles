@@ -18,6 +18,11 @@ export XDG_CACHE_HOME="$HOME/.cache"
 
 # User-local binaries (e.g. the bat/fd symlinks run_once sets up on Linux)
 export PATH="$HOME/.local/bin:$PATH"
+{{- if eq .chezmoi.os "darwin" }}
+
+# Personal scripts (claude-tabs, claude-notify)
+export PATH="$HOME/bin:$PATH"
+{{- end }}
 
 # Editor
 export EDITOR="vim"
