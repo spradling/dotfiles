@@ -2,7 +2,16 @@
 {{- $email := promptStringOnce . "email" "Git email address" -}}
 {{- $name := promptStringOnce . "name" "Git name" -}}
 {{- $machineType := promptChoiceOnce . "machineType" "Machine type" (list "personal" "work") "personal" -}}
+{{- /* Mirrors hostGroups.appliance in .chezmoidata.yaml, which isn't
+       readable from here: the config template renders before .chezmoidata
+       is loaded */ -}}
+{{- $appliance := has .chezmoi.hostname (list "coruscant" "truenas") -}}
+{{- if $appliance -}}
+# TrueNAS mounts /tmp noexec, so run_ scripts can't execute from chezmoi's
+# default temp location
+scriptTempDir = {{ joinPath .chezmoi.homeDir ".cache" "chezmoi-scripts" | quote }}
 
+{{ end -}}
 [data]
   email = {{ $email | quote }}
   name = {{ $name | quote }}
